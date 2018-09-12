@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Getter
-@Setter
 @EqualsAndHashCode(exclude = {"id", "password"})
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -18,25 +15,24 @@ public abstract class UserBase {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    @Getter @Setter protected long id;
 
     @Column(name = "surname", nullable = false)
-    protected String surname;
+    @Getter @Setter protected String surname;
+
     @Column(name = "firstName", nullable = false)
-    protected String firstName;
+    @Getter @Setter protected String firstName;
     @Column(name = "patronymic")
-    protected String patronymic;
+    @Getter @Setter protected String patronymic;
 
     @Column(name = "login", nullable = false, unique = true)
-    protected String login;
+    @Getter @Setter protected String login;
     @Column(name = "password", nullable = false)
-    protected String password;
+    @Getter @Setter protected String password;
 
     @Column(name = "phoneNumber")
-    protected String phoneNumber;
+    @Getter @Setter protected String phoneNumber;
     @Column(name = "email")
-    protected String email;
-
-
+    @Getter @Setter protected String email;
 
 }
