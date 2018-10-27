@@ -1,8 +1,7 @@
 package com.two.lamps.psy.web.model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "consultations")
@@ -11,37 +10,29 @@ public class Consultation {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDateTime date;
     @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private Employee employee;
     @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private Client client;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private Service service;
     @Column(name = "paidSum")
-    private Integer paidSum;
+    private Integer paidSum = 0;
     @Column(name = "isFullyPaid")
     private boolean isFullyPaid;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Employee getEmployee() {
@@ -50,6 +41,9 @@ public class Consultation {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+        if (employee != null && client != null) {
+            employee.addClient(client);
+        }
     }
 
     public Client getClient() {
@@ -58,6 +52,9 @@ public class Consultation {
 
     public void setClient(Client client) {
         this.client = client;
+        if (client != null && employee != null) {
+            client.addEmployee(employee);
+        }
     }
 
     public Service getService() {
@@ -85,4 +82,11 @@ public class Consultation {
     }
 
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "role")
 public abstract class UserBase {
 
     @Id
@@ -26,16 +26,19 @@ public abstract class UserBase {
     @Column(name = "password", nullable = false)
     protected String password;
 
+    @Column(name = "role", insertable=false, updatable=false, nullable = false)
+    private String role;
+
     @Column(name = "phoneNumber")
     protected String phoneNumber;
     @Column(name = "email")
     protected String email;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -111,5 +114,13 @@ public abstract class UserBase {
     @Override
     public int hashCode() {
         return Objects.hash(surname, firstName, patronymic, login, phoneNumber, email);
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

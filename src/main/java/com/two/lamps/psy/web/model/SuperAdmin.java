@@ -4,7 +4,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue(value = "ROLE_SUPER_ADMIN")
+@DiscriminatorValue(SuperAdmin.ROLE)
 public class SuperAdmin extends UserBase {
+
+    public static final String ROLE = "ROLE_SUPER_ADMIN";
 
 }

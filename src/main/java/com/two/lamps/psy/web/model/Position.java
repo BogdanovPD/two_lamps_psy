@@ -2,6 +2,7 @@ package com.two.lamps.psy.web.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "positions")
@@ -10,15 +11,18 @@ public class Position {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    public long getId() {
+    @OneToMany(mappedBy = "position")
+    private Set<Employee> employees;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,5 +46,13 @@ public class Position {
     public int hashCode() {
 
         return Objects.hash(name);
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 }

@@ -2,6 +2,7 @@ package com.two.lamps.psy.web.model;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "social_networks")
@@ -10,18 +11,21 @@ public class SocialNetwork {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @ManyToOne(optional = false)
     @PrimaryKeyJoinColumn
     private SocialNetworkType type;
     @Column(name = "reference", nullable = false)
     private String reference;
 
-    public long getId() {
+    @OneToMany(mappedBy = "socialNetwork")
+    private Set<Client> clients;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,5 +56,13 @@ public class SocialNetwork {
     @Override
     public int hashCode() {
         return Objects.hash(reference);
+    }
+
+    public Set<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<Client> clients) {
+        this.clients = clients;
     }
 }

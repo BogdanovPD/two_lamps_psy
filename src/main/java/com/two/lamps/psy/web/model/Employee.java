@@ -1,28 +1,33 @@
 package com.two.lamps.psy.web.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue(value = "ROLE_EMPLOYEE")
+@DiscriminatorValue(Employee.ROLE)
 public class Employee extends UserBase {
 
-    @ManyToOne(optional = false)
+    public static final String ROLE = "ROLE_EMPLOYEE";
+
+    @ManyToOne
     @PrimaryKeyJoinColumn
     private Position position;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "employee_client",
             joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
-    private Set<Client> clients;
+    private Set<Client> clients = new HashSet<>();
 
-    public Position getPosition() {
-        return position;
+    @OneToMany(mappedBy = "employee")
+    private Set<Consultation> consultations;
+
+    public boolean addClient(Client client) {
+        return clients.add(client);
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public boolean removeClient(Client client) {
+        return clients.remove(client);
     }
 
     public Set<Client> getClients() {
@@ -33,17 +38,19 @@ public class Employee extends UserBase {
         this.clients = clients;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(position, employee.position);
+    public Position getPosition() {
+        return position;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), position);
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Set<Consultation> getConsultations() {
+        return consultations;
+    }
+
+    public void setConsultations(Set<Consultation> consultations) {
+        this.consultations = consultations;
     }
 }
