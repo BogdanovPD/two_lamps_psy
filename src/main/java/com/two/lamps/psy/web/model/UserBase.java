@@ -123,4 +123,10 @@ public abstract class UserBase {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getSurnameAndInitials(){
+        return String.format("%s %s.%s.", surname, firstName.substring(0, 1).toUpperCase(),
+                patronymic == null || patronymic.isEmpty() ? "" :
+                        patronymic.substring(0, 1).toUpperCase());
+    }
 }

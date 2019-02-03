@@ -18,6 +18,8 @@ public class Service {
     private Integer cost;
     @Column(name = "durationHours", nullable = false)
     private Integer durationHours;
+    @Column(name = "isRemote")
+    private boolean isRemote;
 
     @OneToMany(mappedBy = "service")
     private Set<Consultation> consultations;
@@ -85,5 +87,13 @@ public class Service {
 
     public void setSubscriptions(Set<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public boolean isRemote() {
+        return isRemote;
+    }
+
+    public void setRemote(boolean remote) {
+        isRemote = remote;
     }
 }

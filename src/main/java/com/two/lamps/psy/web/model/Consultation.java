@@ -26,6 +26,10 @@ public class Consultation {
     private Integer paidSum = 0;
     @Column(name = "isFullyPaid")
     private boolean isFullyPaid;
+    @Column(name = "isCanceled")
+    private boolean isCanceled;
+    @Column(name = "cancelDate")
+    private LocalDateTime cancelDate;
 
     public Long getId() {
         return id;
